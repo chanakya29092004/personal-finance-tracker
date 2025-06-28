@@ -298,3 +298,134 @@ For support, email your-email@example.com or create an issue in the repository.
 - **Free Plan**: Individual users, basic features, local AI knowledge
 - **Pro Plan**: Small business features, priority AI support, advanced analytics
 - **Elite Plan**: Enterprise features, unlimited AI queries, custom insights
+
+## 🐳 **Docker Deployment**
+
+### **Quick Start with Docker**
+
+1. **Clone the repository**
+```bash
+git clone https://github.com/yourusername/personal-finance-tracker.git
+cd personal-finance-tracker
+```
+
+2. **Setup environment variables**
+```bash
+cp .env.example .env
+# Edit .env with your actual values
+```
+
+3. **Run with Docker Compose**
+```bash
+# Windows
+./deploy-local.bat
+
+# Linux/Mac
+chmod +x deploy-local.sh
+./deploy-local.sh
+```
+
+4. **Access the application**
+- Frontend: http://localhost
+- Backend API: http://localhost:5000/api
+- Database: MongoDB on port 27017
+
+### **Production Deployment on Render**
+
+#### **Prerequisites:**
+- Docker Hub account
+- GitHub repository
+- Render account
+- MongoDB Atlas database (recommended)
+
+#### **Setup GitHub Secrets:**
+1. Go to GitHub repository → Settings → Secrets and variables → Actions
+2. Add the following secrets:
+   - `DOCKER_USERNAME`: Your Docker Hub username
+   - `DOCKER_PASSWORD`: Your Docker Hub access token
+   - `REACT_APP_API_URL`: Your backend URL (e.g., https://your-app-backend.onrender.com/api)
+   - `RENDER_DEPLOY_WEBHOOK`: (Optional) Render deploy webhook URL
+
+#### **Deploy to Render:**
+1. **Create Backend Service:**
+   - New Web Service on Render
+   - Connect GitHub repository
+   - Use Docker
+   - Docker Command: `docker run -p $PORT:5000 yourusername/finance-tracker-backend:latest`
+   - Environment variables: `MONGODB_URI`, `JWT_SECRET`
+
+2. **Create Frontend Service:**
+   - New Web Service on Render
+   - Connect GitHub repository  
+   - Use Docker
+   - Docker Command: `docker run -p $PORT:80 yourusername/finance-tracker-frontend:latest`
+
+3. **Auto-deployment:**
+   - Push to `main` branch triggers automatic build and deployment
+   - Docker images are automatically built and pushed to Docker Hub
+   - Render pulls latest images and redeploys
+
+### **Docker Commands**
+
+```bash
+# Build images locally
+docker-compose build
+
+# Start all services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+
+# Rebuild and restart
+docker-compose down && docker-compose build && docker-compose up -d
+
+# Production deployment
+docker-compose -f docker-compose.prod.yml up -d
+```
+
+### **CI/CD Pipeline**
+
+The GitHub Actions workflow automatically:
+- ✅ Runs tests on push/PR
+- ✅ Builds Docker images
+- ✅ Pushes to Docker Hub
+- ✅ Triggers Render deployment
+- ✅ Runs security scans
+
+**Workflow triggers:**
+- Push to `main`: Full build and deploy
+- Push to `develop`: Build and test only
+- Pull requests: Test only
+
+## 🚀 **Deployment Architecture**
+
+```
+GitHub Repository
+    ↓ (push to main)
+GitHub Actions CI/CD
+    ↓ (build & push)
+Docker Hub Registry
+    ↓ (pull images)
+Render Platform
+    ↓ (deploy containers)
+Production Environment
+```
+
+### **Environment Variables**
+
+**Backend (.env):**
+- `MONGODB_URI`: MongoDB connection string
+- `JWT_SECRET`: JWT signing secret
+- `NODE_ENV`: production
+- `PORT`: 5000
+
+**Frontend (.env):**
+- `REACT_APP_API_URL`: Backend API URL
+- `REACT_APP_GEMINI_API_KEY`: Google Gemini API key
+- `REACT_APP_HUGGING_FACE_TOKEN`: Hugging Face API token
+
+## 🔧 **Tech Stack

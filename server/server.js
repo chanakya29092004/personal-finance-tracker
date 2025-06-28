@@ -18,7 +18,12 @@ app.use('/api/transactions', require('./routes/transactions'));
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'Personal Finance Tracker API is running!' });
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    service: 'finance-tracker-backend',
+    version: process.env.npm_package_version || '1.0.0'
+  });
 });
 
 // Error handling middleware
