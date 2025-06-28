@@ -4,7 +4,7 @@ import App from './App';
 
 // Mock the context providers to avoid authentication issues in tests
 jest.mock('./context/AuthContext', () => ({
-  AuthProvider: ({ children }) => <div>{children}</div>,
+  AuthProvider: ({ children }) => <div data-testid="auth-provider">{children}</div>,
   useAuth: () => ({
     user: null,
     login: jest.fn(),
@@ -13,12 +13,19 @@ jest.mock('./context/AuthContext', () => ({
   })
 }));
 
-jest.mock('./context/PreferencesContext', () => ({
-  PreferencesProvider: ({ children }) => <div>{children}</div>,
-  usePreferences: () => ({
-    currency: 'INR',
+jest.mock('./context/UserPreferencesContext', () => ({
+  UserPreferencesProvider: ({ children }) => <div data-testid="preferences-provider">{children}</div>,
+  useUserPreferences: () => ({
+    preferences: { currency: 'INR' },
     updatePreferences: jest.fn()
   })
+}));
+
+// Mock services to avoid API calls in tests
+jest.mock('./services/api', () => ({
+  authAPI: {
+    getCurrentUser: jest.fn(() => Promise.resolve({ data: null }))
+  }
 }));
 
 test('renders without crashing', () => {
