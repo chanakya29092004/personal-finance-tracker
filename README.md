@@ -430,4 +430,6 @@ Production Environment
 
 ## 🔧 **Tech Stack#   T r i g g e r   n e w   b u i l d   a f t e r   c r e a t i n g   D o c k e r   H u b   r e p o s i t o r i e s  
  #   T e s t   b u i l d   w i t h   p r o p e r   D o c k e r   H u b   w r i t e   p e r m i s s i o n s  
+ #   T r i g g e r   r e b u i l d   w i t h   c o r r e c t   A P I   U R L  
+ #   F o r c e   r e b u i l d   w i t h   u p d a t e d   A P I   U R L   s e c r e t  
  
