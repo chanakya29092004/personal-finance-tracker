@@ -1,0 +1,574 @@
+{
+  "designSystem": {
+    "name": "CodeQuality Pro Dashboard",
+    "version": "1.0",
+    "description": "Professional code quality and plagiarism detection dashboard inspired by Nara's clean financial interface",
+    "inspiration": "Nara financial dashboard - clean, minimal, data-focused"
+  },
+  "brandColors": {
+    "primary": {
+      "purple": "#6366F1",
+      "purpleLight": "#8B5CF6",
+      "purpleDark": "#4F46E5",
+      "purpleGradient": "linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%)"
+    },
+    "secondary": {
+      "blue": "#3B82F6",
+      "blueLight": "#60A5FA",
+      "blueDark": "#2563EB"
+    },
+    "accent": {
+      "green": "#10B981",
+      "greenLight": "#34D399",
+      "orange": "#F59E0B",
+      "orangeLight": "#FBBF24",
+      "red": "#EF4444",
+      "redLight": "#F87171"
+    },
+    "neutral": {
+      "white": "#FFFFFF",
+      "gray50": "#F9FAFB",
+      "gray100": "#F3F4F6",
+      "gray200": "#E5E7EB",
+      "gray300": "#D1D5DB",
+      "gray400": "#9CA3AF",
+      "gray500": "#6B7280",
+      "gray600": "#4B5563",
+      "gray700": "#374151",
+      "gray800": "#1F2937",
+      "gray900": "#111827"
+    },
+    "functional": {
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444",
+      "info": "#3B82F6"
+    }
+  },
+  "typography": {
+    "fontFamily": {
+      "primary": "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+      "mono": "'JetBrains Mono', 'Fira Code', 'Consolas', monospace",
+      "display": "'Inter', sans-serif"
+    },
+    "fontSizes": {
+      "xs": "12px",
+      "sm": "14px",
+      "base": "16px",
+      "lg": "18px",
+      "xl": "20px",
+      "2xl": "24px",
+      "3xl": "30px",
+      "4xl": "36px",
+      "5xl": "48px"
+    },
+    "fontWeights": {
+      "light": 300,
+      "normal": 400,
+      "medium": 500,
+      "semibold": 600,
+      "bold": 700,
+      "extrabold": 800
+    },
+    "lineHeight": {
+      "tight": 1.25,
+      "snug": 1.375,
+      "normal": 1.5,
+      "relaxed": 1.625,
+      "loose": 2
+    }
+  },
+  "layout": {
+    "containerMaxWidth": "1440px",
+    "borderRadius": {
+      "none": "0",
+      "sm": "4px",
+      "base": "8px",
+      "md": "12px",
+      "lg": "16px",
+      "xl": "20px",
+      "2xl": "24px",
+      "full": "9999px"
+    },
+    "shadows": {
+      "xs": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+      "sm": "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+      "base": "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+      "md": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+      "lg": "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      "xl": "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+    },
+    "spacing": {
+      "px": "1px",
+      "0": "0",
+      "1": "4px",
+      "2": "8px",
+      "3": "12px",
+      "4": "16px",
+      "5": "20px",
+      "6": "24px",
+      "8": "32px",
+      "10": "40px",
+      "12": "48px",
+      "16": "64px",
+      "20": "80px",
+      "24": "96px"
+    }
+  },
+  "components": {
+    "sidebar": {
+      "width": "256px",
+      "backgroundColor": "#FFFFFF",
+      "borderRight": "1px solid #E5E7EB",
+      "padding": "24px 0",
+      "boxShadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1)"
+    },
+    "sidebarItem": {
+      "active": {
+        "backgroundColor": "#F3F4F6",
+        "borderRight": "3px solid #6366F1",
+        "color": "#6366F1",
+        "fontWeight": 600
+      },
+      "inactive": {
+        "backgroundColor": "transparent",
+        "color": "#6B7280",
+        "fontWeight": 400,
+        "hover": {
+          "backgroundColor": "#F9FAFB",
+          "color": "#374151"
+        }
+      },
+      "padding": "12px 24px",
+      "fontSize": "14px",
+      "display": "flex",
+      "alignItems": "center",
+      "gap": "12px"
+    },
+    "header": {
+      "height": "72px",
+      "backgroundColor": "#FFFFFF",
+      "borderBottom": "1px solid #E5E7EB",
+      "padding": "0 32px",
+      "display": "flex",
+      "alignItems": "center",
+      "justifyContent": "space-between"
+    },
+    "logo": {
+      "fontSize": "24px",
+      "fontWeight": 700,
+      "color": "#111827",
+      "display": "flex",
+      "alignItems": "center",
+      "gap": "8px"
+    },
+    "searchBar": {
+      "backgroundColor": "#F9FAFB",
+      "border": "1px solid #E5E7EB",
+      "borderRadius": "8px",
+      "padding": "8px 16px",
+      "fontSize": "14px",
+      "width": "320px",
+      "focus": {
+        "borderColor": "#6366F1",
+        "boxShadow": "0 0 0 3px rgba(99, 102, 241, 0.1)"
+      }
+    },
+    "primaryButton": {
+      "backgroundColor": "#6366F1",
+      "color": "#FFFFFF",
+      "borderRadius": "8px",
+      "padding": "10px 20px",
+      "fontSize": "14px",
+      "fontWeight": 500,
+      "border": "none",
+      "cursor": "pointer",
+      "transition": "all 0.2s ease",
+      "hover": {
+        "backgroundColor": "#4F46E5",
+        "transform": "translateY(-1px)",
+        "boxShadow": "0 4px 12px rgba(99, 102, 241, 0.3)"
+      }
+    },
+    "secondaryButton": {
+      "backgroundColor": "#FFFFFF",
+      "color": "#374151",
+      "border": "1px solid #D1D5DB",
+      "borderRadius": "8px",
+      "padding": "10px 20px",
+      "fontSize": "14px",
+      "fontWeight": 500,
+      "cursor": "pointer",
+      "transition": "all 0.2s ease",
+      "hover": {
+        "backgroundColor": "#F9FAFB",
+        "borderColor": "#9CA3AF"
+      }
+    }
+  },
+  "dashboardLayout": {
+    "mainContent": {
+      "padding": "32px",
+      "backgroundColor": "#F9FAFB",
+      "minHeight": "100vh"
+    },
+    "pageHeader": {
+      "marginBottom": "32px",
+      "display": "flex",
+      "justifyContent": "space-between",
+      "alignItems": "center"
+    },
+    "pageTitle": {
+      "fontSize": "30px",
+      "fontWeight": 700,
+      "color": "#111827"
+    },
+    "pageSubtitle": {
+      "fontSize": "14px",
+      "color": "#6B7280",
+      "marginTop": "4px"
+    },
+    "statsGrid": {
+      "display": "grid",
+      "gridTemplateColumns": "repeat(auto-fit, minmax(280px, 1fr))",
+      "gap": "24px",
+      "marginBottom": "32px"
+    }
+  },
+  "adaptedContent": {
+    "pageTitle": "Code Quality Analysis",
+    "pageSubtitle": "Project: main-repo",
+    "welcomeMessage": "Good morning, Developer",
+    "sidebarMenuItems": [
+      {
+        "icon": "dashboard",
+        "label": "Dashboard",
+        "active": true
+      },
+      {
+        "icon": "code",
+        "label": "Code Analysis",
+        "active": false
+      },
+      {
+        "icon": "search",
+        "label": "Plagiarism Check",
+        "active": false
+      },
+      {
+        "icon": "chart",
+        "label": "Quality Metrics",
+        "active": false
+      },
+      {
+        "icon": "files",
+        "label": "Projects",
+        "active": false
+      },
+      {
+        "icon": "users",
+        "label": "Team",
+        "active": false
+      },
+      {
+        "icon": "settings",
+        "label": "Settings",
+        "active": false
+      },
+      {
+        "icon": "help",
+        "label": "Help",
+        "active": false
+      }
+    ]
+  },
+  "statsCards": {
+    "card": {
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": "12px",
+      "padding": "24px",
+      "boxShadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+      "border": "1px solid #E5E7EB"
+    },
+    "qualityScore": {
+      "title": "Quality Score",
+      "value": "85.2%",
+      "change": "+5%",
+      "changeType": "positive",
+      "subtitle": "in last 30 days",
+      "color": "#10B981"
+    },
+    "plagiarismDetected": {
+      "title": "Plagiarism Issues",
+      "value": "12",
+      "change": "-15%",
+      "changeType": "positive",
+      "subtitle": "in last 30 days",
+      "color": "#EF4444"
+    },
+    "codeComplexity": {
+      "title": "Avg Complexity",
+      "value": "3.4",
+      "change": "+8%",
+      "changeType": "neutral",
+      "subtitle": "in last 30 days",
+      "color": "#F59E0B"
+    }
+  },
+  "charts": {
+    "qualityTrend": {
+      "title": "Quality Score Trend",
+      "subtitle": "Score: 85.2%",
+      "type": "area",
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": "12px",
+      "padding": "24px",
+      "height": "320px",
+      "colors": {
+        "primary": "#6366F1",
+        "gradient": "rgba(99, 102, 241, 0.1)"
+      }
+    },
+    "issuesBreakdown": {
+      "title": "Code Issues This Month",
+      "type": "donut",
+      "total": "156 Issues",
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": "12px",
+      "padding": "24px",
+      "height": "320px",
+      "data": [
+        {
+          "label": "Complexity",
+          "value": 45,
+          "color": "#EF4444",
+          "percentage": "30%"
+        },
+        {
+          "label": "Style Issues",
+          "value": 38,
+          "color": "#F59E0B",
+          "percentage": "25%"
+        },
+        {
+          "label": "Security",
+          "value": 31,
+          "color": "#10B981",
+          "percentage": "20%"
+        },
+        {
+          "label": "Performance",
+          "value": 23,
+          "color": "#3B82F6",
+          "percentage": "15%"
+        },
+        {
+          "label": "Documentation",
+          "value": 19,
+          "color": "#8B5CF6",
+          "percentage": "10%"
+        }
+      ]
+    }
+  },
+  "dataTable": {
+    "container": {
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": "12px",
+      "padding": "24px",
+      "boxShadow": "0 1px 3px 0 rgba(0, 0, 0, 0.1)",
+      "border": "1px solid #E5E7EB"
+    },
+    "title": "Recent Analysis Results",
+    "filters": {
+      "backgroundColor": "#F3F4F6",
+      "borderRadius": "6px",
+      "padding": "6px 12px",
+      "fontSize": "12px",
+      "color": "#6366F1",
+      "marginRight": "8px"
+    },
+    "header": {
+      "backgroundColor": "#F9FAFB",
+      "padding": "12px 16px",
+      "fontSize": "12px",
+      "fontWeight": 600,
+      "color": "#6B7280",
+      "textTransform": "uppercase",
+      "letterSpacing": "0.05em"
+    },
+    "row": {
+      "padding": "16px",
+      "borderBottom": "1px solid #E5E7EB",
+      "hover": {
+        "backgroundColor": "#F9FAFB"
+      }
+    },
+    "columns": [
+      {
+        "key": "date",
+        "label": "Date",
+        "width": "120px"
+      },
+      {
+        "key": "file",
+        "label": "File Name",
+        "width": "200px"
+      },
+      {
+        "key": "reference",
+        "label": "Issues Found",
+        "width": "150px"
+      },
+      {
+        "key": "type",
+        "label": "Type",
+        "width": "140px"
+      },
+      {
+        "key": "score",
+        "label": "Quality Score",
+        "width": "120px"
+      },
+      {
+        "key": "status",
+        "label": "Status",
+        "width": "100px"
+      }
+    ],
+    "sampleData": [
+      {
+        "date": "21/01/2025",
+        "file": "auth.js",
+        "reference": "5 issues",
+        "type": "Security Check",
+        "score": "92.5%",
+        "status": "Reviewed"
+      },
+      {
+        "date": "21/01/2025",
+        "file": "utils.py",
+        "reference": "12 issues",
+        "type": "Plagiarism Check",
+        "score": "78.2%",
+        "status": "Pending"
+      }
+    ]
+  },
+  "trialBanner": {
+    "container": {
+      "backgroundColor": "#FEF3C7",
+      "borderRadius": "8px",
+      "padding": "16px",
+      "margin": "24px",
+      "border": "1px solid #F59E0B"
+    },
+    "title": "14 Days Trial",
+    "subtitle": "Consider upgrading your plan so you can access unlimited analysis.",
+    "button": {
+      "text": "Upgrade now",
+      "backgroundColor": "#F59E0B",
+      "color": "#FFFFFF"
+    }
+  },
+  "badges": {
+    "qualityHigh": {
+      "backgroundColor": "#D1FAE5",
+      "color": "#065F46",
+      "borderRadius": "12px",
+      "padding": "4px 8px",
+      "fontSize": "12px",
+      "fontWeight": 500
+    },
+    "qualityMedium": {
+      "backgroundColor": "#FEF3C7",
+      "color": "#92400E",
+      "borderRadius": "12px",
+      "padding": "4px 8px",
+      "fontSize": "12px",
+      "fontWeight": 500
+    },
+    "qualityLow": {
+      "backgroundColor": "#FEE2E2",
+      "color": "#991B1B",
+      "borderRadius": "12px",
+      "padding": "4px 8px",
+      "fontSize": "12px",
+      "fontWeight": 500
+    }
+  },
+  "animations": {
+    "hover": {
+      "duration": "0.2s",
+      "easing": "ease-in-out"
+    },
+    "focus": {
+      "duration": "0.15s",
+      "easing": "ease-out"
+    },
+    "slideIn": {
+      "duration": "0.3s",
+      "easing": "cubic-bezier(0.4, 0, 0.2, 1)"
+    }
+  },
+  "responsiveBreakpoints": {
+    "sm": "640px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  },
+  "responsiveLayout": {
+    "mobile": {
+      "sidebar": "hidden",
+      "navigation": "bottom-tab",
+      "padding": "16px",
+      "statsGrid": "grid-cols-1"
+    },
+    "tablet": {
+      "sidebar": "collapsible",
+      "navigation": "sidebar",
+      "padding": "24px",
+      "statsGrid": "grid-cols-2"
+    },
+    "desktop": {
+      "sidebar": "fixed",
+      "navigation": "sidebar",
+      "padding": "32px",
+      "statsGrid": "grid-cols-3"
+    }
+  },
+  "accessibility": {
+    "focusRing": {
+      "color": "#6366F1",
+      "width": "2px",
+      "offset": "2px"
+    },
+    "contrast": {
+      "minimum": "4.5:1",
+      "preferred": "7:1"
+    },
+    "motion": {
+      "respectReducedMotion": true,
+      "fallbackToNoAnimation": true
+    }
+  },
+  "designPrinciples": {
+    "cleanMinimalism": {
+      "description": "Clean, minimal interface focusing on data clarity and usability",
+      "keyElements": ["Generous whitespace", "Subtle shadows", "Clear typography hierarchy"]
+    },
+    "dataFirst": {
+      "description": "Design prioritizes data visibility and quick insights",
+      "elements": ["Clear metrics", "Intuitive charts", "Scannable tables"]
+    },
+    "professionalTrust": {
+      "description": "Builds confidence through consistent, reliable interface patterns",
+      "features": ["Consistent spacing", "Reliable interactions", "Clear feedback"]
+    },
+    "developerFocused": {
+      "description": "Tailored specifically for developer workflows and needs",
+      "considerations": ["Code-friendly typography", "Technical terminology", "Efficient navigation"]
+    }
+  }
+}
