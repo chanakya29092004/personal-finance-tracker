@@ -2,27 +2,53 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const { requestMonitor, userActivityTracker } = require('./middleware/monitoring');
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 
+// Monitoring middleware (before other middleware)
+app.use(requestMonitor);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
 
+// Add user activity tracking after auth middleware
+app.use(userActivityTracker);
+
+// Serve static files (for monitoring dashboard)
+app.use('/public', express.static('public'));
+
+// Monitoring dashboard route
+app.get('/monitoring', (req, res) => {
+  res.sendFile(__dirname + '/public/monitoring-dashboard.html');
+});
+
 // Routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/transactions', require('./routes/transactions'));
+app.use('/api/monitoring', require('./routes/monitoring'));
 
-// Health check endpoint
+// Enhanced health check endpoint
 app.get('/api/health', (req, res) => {
+  const { requestAnalytics } = require('./middleware/monitoring');
+  
   res.status(200).json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
     service: 'finance-tracker-backend',
-    version: process.env.npm_package_version || '1.0.0'
+    version: process.env.npm_package_version || '1.0.0',
+    database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected',
+    uptime: process.uptime(),
+    memory: process.memoryUsage(),
+    requests: {
+      total: requestAnalytics.totalRequests,
+      activeUsers: requestAnalytics.activeUsers.size
+    },
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
