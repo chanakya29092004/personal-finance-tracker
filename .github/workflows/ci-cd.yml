@@ -32,12 +32,12 @@ jobs:
     - name: Install backend dependencies
       run: |
         cd server
-        npm ci
+        npm install
 
     - name: Install frontend dependencies
       run: |
         cd client
-        npm ci
+        npm install
 
     - name: Run backend tests
       run: |
