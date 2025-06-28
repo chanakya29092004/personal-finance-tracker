@@ -79,5 +79,5 @@ README.md
 **/*.spec.js
 jest.config.js
 
-# Public folder (handled by build)
-public/index.html
+# Note: public folder is needed for React build process
+# Don't exclude public/index.html as it's required by react-scripts build
