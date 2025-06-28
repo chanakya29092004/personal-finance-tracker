@@ -12,6 +12,7 @@ import TransactionHistory from './components/TransactionHistory';
 import MonthlySummary from './components/MonthlySummary';
 import Settings from './components/Settings';
 import Pricing from './components/Pricing';
+import AISupport from './components/AISupport';
 import ErrorBoundary from './components/ErrorBoundary';
 
 function AppRoutes() {
@@ -21,7 +22,8 @@ function AppRoutes() {
     <Router>
       <div className="min-h-screen bg-gray-50">
         {isAuthenticated && <Navbar />}
-        <Routes>
+        <div className={isAuthenticated ? "lg:ml-64 lg:pl-0 pb-16 lg:pb-0" : ""}>
+          <Routes>
           <Route 
             path="/login" 
             element={isAuthenticated ? <Navigate to="/" /> : <Login />} 
@@ -79,6 +81,8 @@ function AppRoutes() {
             element={<Navigate to="/" />} 
           />
         </Routes>
+        {isAuthenticated && <AISupport />}
+        </div>
       </div>
     </Router>
   );
