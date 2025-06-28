@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { UserPreferencesProvider } from './context/UserPreferencesContext';
 import { NotificationProvider } from './components/NotificationProvider';
 import PrivateRoute from './components/PrivateRoute';
 import Navbar from './components/Navbar';
@@ -92,9 +93,11 @@ function App() {
   return (
     <ErrorBoundary>
       <AuthProvider>
-        <NotificationProvider>
-          <AppRoutes />
-        </NotificationProvider>
+        <UserPreferencesProvider>
+          <NotificationProvider>
+            <AppRoutes />
+          </NotificationProvider>
+        </UserPreferencesProvider>
       </AuthProvider>
     </ErrorBoundary>
   );

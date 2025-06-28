@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useUserPreferences } from '../context/UserPreferencesContext';
 import SubscriptionManagement from './SubscriptionManagement';
 
 const Settings = () => {
   const { user, logout } = useAuth();
+  const { preferences, updatePreferences } = useUserPreferences();
   const [activeTab, setActiveTab] = useState('profile');
   const [formData, setFormData] = useState({
     name: user?.name || '',
@@ -11,15 +13,27 @@ const Settings = () => {
     currentPassword: '',
     newPassword: '',
     confirmPassword: '',
-    currency: 'USD',
-    dateFormat: 'MM/dd/yyyy',
-    emailNotifications: true,
-    budgetAlerts: true,
-    monthlyReports: false
+    currency: preferences.currency,
+    dateFormat: preferences.dateFormat,
+    emailNotifications: preferences.emailNotifications,
+    budgetAlerts: preferences.budgetAlerts,
+    monthlyReports: preferences.monthlyReports
   });
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // Update form data when preferences change
+  useEffect(() => {
+    setFormData(prev => ({
+      ...prev,
+      currency: preferences.currency,
+      dateFormat: preferences.dateFormat,
+      emailNotifications: preferences.emailNotifications,
+      budgetAlerts: preferences.budgetAlerts,
+      monthlyReports: preferences.monthlyReports
+    }));
+  }, [preferences]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -79,10 +93,24 @@ const Settings = () => {
   const handlePreferencesSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
+    setSuccess('');
+    
     try {
-      // API call would go here
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
-      setSuccess('Preferences saved successfully!');
+      // Update preferences using context
+      const result = await updatePreferences({
+        currency: formData.currency,
+        dateFormat: formData.dateFormat,
+        emailNotifications: formData.emailNotifications,
+        budgetAlerts: formData.budgetAlerts,
+        monthlyReports: formData.monthlyReports
+      });
+      
+      if (result.success) {
+        setSuccess('Preferences saved successfully! Changes will reflect across the app.');
+      } else {
+        setError(result.error || 'Failed to save preferences');
+      }
     } catch (error) {
       setError('Failed to save preferences');
     } finally {
@@ -303,6 +331,7 @@ const Settings = () => {
                         onChange={handleChange}
                         className="form-select"
                       >
+                        <option value="INR">INR - Indian Rupee</option>
                         <option value="USD">USD - US Dollar</option>
                         <option value="EUR">EUR - Euro</option>
                         <option value="GBP">GBP - British Pound</option>

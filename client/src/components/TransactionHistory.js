@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { transactionsAPI } from '../services/api';
+import { useUserPreferences } from '../context/UserPreferencesContext';
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 
 const TransactionHistory = () => {
+  const { formatCurrency, formatDate } = useUserPreferences();
   const [transactions, setTransactions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -96,13 +98,6 @@ const TransactionHistory = () => {
         setDeleteLoading(null);
       }
     }
-  };
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
   };
 
   const handlePageChange = (newPage) => {
@@ -280,7 +275,7 @@ const TransactionHistory = () => {
                         <tr key={transaction._id} className="group hover:bg-gray-50 transition-colors duration-200">
                           <td className="font-medium text-gray-900">
                             <div className="flex flex-col">
-                              <span>{format(new Date(transaction.date), 'MMM dd, yyyy')}</span>
+                              <span>{formatDate(transaction.date)}</span>
                               <span className="text-xs text-gray-500">
                                 {format(new Date(transaction.date), 'EEEE')}
                               </span>

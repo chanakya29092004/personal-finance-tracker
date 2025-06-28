@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { transactionsAPI } from '../services/api';
 import { useNotification } from './NotificationProvider';
+import { useUserPreferences } from '../context/UserPreferencesContext';
 import { UsageIndicator } from './UpgradePrompt';
 import usePlanPermissions from '../hooks/usePlanPermissions';
 import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 
 const AddTransaction = () => {
+  const { getCurrencySymbol } = useUserPreferences();
   const [formData, setFormData] = useState({
     amount: '',
     category: '',
@@ -222,7 +224,7 @@ const AddTransaction = () => {
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <span className="text-gray-500 text-lg">$</span>
+                    <span className="text-gray-500 text-lg">{getCurrencySymbol()}</span>
                   </div>
                   <input
                     type="number"

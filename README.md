@@ -25,6 +25,11 @@ A full-stack web application for managing personal finances, built with React, N
 - 🔐 **Secure Authentication**: JWT tokens with password hashing
 - 📈 **Financial Insights**: Monthly trends, category breakdowns, and savings rate tracking
 - ⚡ **Real-time Updates**: Instant UI updates after transactions
+- 🤖 **AI Financial Assistant**: Smart chat & voice support with Indian finance expertise
+- 💰 **Indian Currency Support**: INR as default currency with localized formatting
+- 🎯 **Plan-Based Features**: Free, Pro, and Elite tiers with different capabilities
+- 🗣️ **Voice Support**: Browser-based voice chat (no external APIs needed)
+- 🧠 **Smart Knowledge Base**: Comprehensive local responses for common finance questions
 
 ## Tech Stack
 
@@ -280,3 +285,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Support
 
 For support, email your-email@example.com or create an issue in the repository.
+
+### AI Financial Assistant
+- **Intelligent Chat Support**: Answers budgeting, investment, and tax questions specific to India
+- **Voice Interface**: Browser-based speech recognition and text-to-speech (no API keys required)
+- **Local Knowledge Base**: Comprehensive responses for common financial topics without internet
+- **API Integration Ready**: Optional free AI APIs (Hugging Face, Cohere, Gemini) for advanced features
+- **Smart Fallbacks**: Graceful handling when APIs are unavailable
+- **Indian Finance Focus**: Specific advice for SIP, PPF, 80C deductions, and rupee-based planning
+
+### Subscription Plans
+- **Free Plan**: Individual users, basic features, local AI knowledge
+- **Pro Plan**: Small business features, priority AI support, advanced analytics
+- **Elite Plan**: Enterprise features, unlimited AI queries, custom insights

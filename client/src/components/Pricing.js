@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { PRICING_PLANS } from '../config/pricing';
 import { useAuth } from '../context/AuthContext';
 import { useNotification } from './NotificationProvider';
+import AISalesAgent from './AISalesAgent';
 
-const PricingCard = ({ plan, currentPlan, onSelectPlan, isAnnual }) => {
+const PricingCard = ({ plan, currentPlan, onSelectPlan, isAnnual, onTalkToSales, onChatWithSales }) => {
   const { success, info } = useNotification();
   
   const getPrice = () => {
@@ -94,25 +95,47 @@ const PricingCard = ({ plan, currentPlan, onSelectPlan, isAnnual }) => {
         )}
       </div>
 
-      <button
-        onClick={handleSelectPlan}
-        disabled={isCurrentPlan}
-        className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 ${
-          isCurrentPlan
-            ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
-            : plan.popular
-            ? 'bg-primary-600 text-white hover:bg-primary-700 shadow-lg hover:shadow-xl'
-            : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-primary-500 hover:text-primary-600'
-        }`}
-      >
-        {isCurrentPlan ? 'Current Plan' : plan.buttonText}
-      </button>
+      {/* Button Section */}
+      {plan.id === 'elite' && !isCurrentPlan ? (
+        <div className="space-y-3">
+          <button
+            onClick={() => onTalkToSales()}
+            className="w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 bg-gradient-to-r from-primary-600 to-purple-600 text-white hover:from-primary-700 hover:to-purple-700 shadow-lg hover:shadow-xl flex items-center justify-center space-x-2"
+          >
+            <span>🎤</span>
+            <span>Talk to Sales (Voice + Chat)</span>
+          </button>
+          <button
+            onClick={() => onChatWithSales()}
+            className="w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 bg-white border-2 border-primary-300 text-primary-700 hover:border-primary-500 hover:bg-primary-50 flex items-center justify-center space-x-2"
+          >
+            <span>💬</span>
+            <span>Chat with Sales</span>
+          </button>
+        </div>
+      ) : (
+        <button
+          onClick={handleSelectPlan}
+          disabled={isCurrentPlan}
+          className={`w-full py-3 px-6 rounded-xl font-semibold transition-all duration-200 ${
+            isCurrentPlan
+              ? 'bg-gray-100 text-gray-500 cursor-not-allowed'
+              : plan.popular
+              ? 'bg-primary-600 text-white hover:bg-primary-700 shadow-lg hover:shadow-xl'
+              : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-primary-500 hover:text-primary-600'
+          }`}
+        >
+          {isCurrentPlan ? 'Current Plan' : plan.buttonText}
+        </button>
+      )}
     </div>
   );
 };
 
 const Pricing = () => {
   const [isAnnual, setIsAnnual] = useState(false);
+  const [showSalesAgent, setShowSalesAgent] = useState(false);
+  const [salesAgentMode, setSalesAgentMode] = useState('chat');
   const { user } = useAuth();
   const { success, info } = useNotification();
   
@@ -139,6 +162,20 @@ const Pricing = () => {
       setCurrentPlan(planId);
       success(`Welcome to ${PRICING_PLANS[planId.toUpperCase()].name}! Your subscription is now active.`);
     }, 2000);
+  };
+
+  const handleTalkToSales = () => {
+    setSalesAgentMode('voice');
+    setShowSalesAgent(true);
+  };
+
+  const handleChatWithSales = () => {
+    setSalesAgentMode('chat');
+    setShowSalesAgent(true);
+  };
+
+  const closeSalesAgent = () => {
+    setShowSalesAgent(false);
   };
 
   return (
@@ -191,8 +228,45 @@ const Pricing = () => {
               currentPlan={currentPlan}
               onSelectPlan={handleSelectPlan}
               isAnnual={isAnnual}
+              onTalkToSales={handleTalkToSales}
+              onChatWithSales={handleChatWithSales}
             />
           ))}
+        </div>
+
+        {/* Need Help Choosing Section */}
+        <div className="text-center mb-16">
+          <div className="bg-gradient-to-r from-primary-50 to-purple-50 border border-primary-200 rounded-2xl p-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">
+              🤔 Need Help Choosing the Right Plan?
+            </h3>
+            <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
+              Our AI sales consultant Sarah is here to help! She can answer questions about features, 
+              pricing, and help you find the perfect plan for your specific needs.
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <button
+                onClick={handleTalkToSales}
+                className="inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r from-primary-600 to-purple-600 text-white font-semibold rounded-xl hover:from-primary-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl"
+              >
+                <span className="mr-2 text-lg">🎤</span>
+                Talk to Sarah (Voice + Chat)
+              </button>
+              
+              <button
+                onClick={handleChatWithSales}
+                className="inline-flex items-center justify-center px-6 py-3 bg-white border-2 border-primary-300 text-primary-700 font-semibold rounded-xl hover:border-primary-500 hover:bg-primary-50 transition-all duration-200"
+              >
+                <span className="mr-2 text-lg">💬</span>
+                Chat with Sarah
+              </button>
+            </div>
+            
+            <div className="mt-4 text-sm text-gray-500">
+              ✨ Powered by AI • Instant responses • Available 24/7
+            </div>
+          </div>
         </div>
 
         {/* FAQ Section */}
@@ -262,6 +336,14 @@ const Pricing = () => {
           </div>
         </div>
       </div>
+      
+      {/* AI Sales Agent */}
+      {showSalesAgent && (
+        <AISalesAgent
+          mode={salesAgentMode}
+          onClose={closeSalesAgent}
+        />
+      )}
     </div>
   );
 };

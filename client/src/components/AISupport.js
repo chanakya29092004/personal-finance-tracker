@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import usePlanPermissions from '../hooks/usePlanPermissions';
+import aiService from '../services/aiService';
 
 // Local knowledge base for instant responses (no API calls needed)
 const KNOWLEDGE_BASE = {
@@ -139,9 +140,15 @@ const AISupport = () => {
     setInputValue('');
     setIsTyping(true);
 
-    // Simulate AI thinking time
-    setTimeout(() => {
-      const aiResponse = findBestResponse(message);
+    try {
+      // Use AI service with Google Gemini API for intelligent responses
+      const context = {
+        userName: user?.name || 'User',
+        userPlan: currentPlan || 'free',
+        timestamp: new Date().toISOString()
+      };
+      
+      const aiResponse = await aiService.getAIResponse(message, context);
       const personalizedResponse = personalizeResponse(aiResponse);
       
       const aiMessage = {
@@ -151,8 +158,22 @@ const AISupport = () => {
       };
 
       setMessages(prev => [...prev, aiMessage]);
+    } catch (error) {
+      console.log('AI service error, using local response:', error);
+      // Fallback to local knowledge if AI service fails
+      const localResponse = findBestResponse(message);
+      const personalizedResponse = personalizeResponse(localResponse);
+      
+      const aiMessage = {
+        type: 'ai',
+        content: personalizedResponse,
+        timestamp: new Date()
+      };
+
+      setMessages(prev => [...prev, aiMessage]);
+    } finally {
       setIsTyping(false);
-    }, 800 + Math.random() * 1200); // Random delay for realism
+    }
   };
 
   const handleQuickAction = (query) => {

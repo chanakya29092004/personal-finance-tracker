@@ -177,4 +177,79 @@ router.get('/summary', auth, async (req, res) => {
   }
 });
 
+// @route   GET /api/transactions/summary
+// @desc    Get financial summary for AI assistant
+// @access  Private
+router.get('/summary', auth, async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+    
+    // Get all transactions for the user
+    const allTransactions = await Transaction.find({ userId });
+    
+    // Get recent transactions (last 30 days)
+    const recentTransactions = await Transaction.find({ 
+      userId, 
+      date: { $gte: thirtyDaysAgo } 
+    });
+    
+    // Calculate totals
+    const totalIncome = allTransactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + t.amount, 0);
+      
+    const totalExpenses = allTransactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + t.amount, 0);
+      
+    const recentExpenses = recentTransactions
+      .filter(t => t.type === 'expense')
+      .reduce((sum, t) => sum + t.amount, 0);
+      
+    const recentIncome = recentTransactions
+      .filter(t => t.type === 'income')
+      .reduce((sum, t) => sum + t.amount, 0);
+    
+    // Category breakdown for expenses
+    const expensesByCategory = {};
+    allTransactions
+      .filter(t => t.type === 'expense')
+      .forEach(t => {
+        expensesByCategory[t.category] = (expensesByCategory[t.category] || 0) + t.amount;
+      });
+    
+    // Top categories
+    const topCategories = Object.entries(expensesByCategory)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5);
+    
+    // Recent spending pattern
+    const last7Days = new Date();
+    last7Days.setDate(last7Days.getDate() - 7);
+    const weeklyExpenses = recentTransactions
+      .filter(t => t.type === 'expense' && t.date >= last7Days)
+      .reduce((sum, t) => sum + t.amount, 0);
+    
+    const summary = {
+      totalIncome,
+      totalExpenses,
+      netSavings: totalIncome - totalExpenses,
+      recentIncome,
+      recentExpenses,
+      weeklyExpenses,
+      transactionCount: allTransactions.length,
+      topCategories: topCategories.map(([category, amount]) => ({ category, amount })),
+      averageExpensePerTransaction: totalExpenses / (allTransactions.filter(t => t.type === 'expense').length || 1),
+      savingsRate: totalIncome > 0 ? ((totalIncome - totalExpenses) / totalIncome * 100).toFixed(1) : 0
+    };
+    
+    res.json(summary);
+  } catch (error) {
+    console.error('Error fetching financial summary:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
 module.exports = router;

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { transactionsAPI } from '../services/api';
+import { useUserPreferences } from '../context/UserPreferencesContext';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -26,6 +27,7 @@ ChartJS.register(
 
 const Dashboard = () => {
   const location = useLocation();
+  const { formatCurrency } = useUserPreferences();
   const [summary, setSummary] = useState({
     income: 0,
     expenses: 0,
@@ -91,13 +93,6 @@ const Dashboard = () => {
 
     fetchDashboardData();
   }, [dateRange]);
-
-  const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD'
-    }).format(amount);
-  };
 
   const expenseChartData = {
     labels: summary.expenseCategories.map(cat => cat.category),
