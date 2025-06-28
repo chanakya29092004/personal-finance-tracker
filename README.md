@@ -428,4 +428,5 @@ Production Environment
 - `REACT_APP_GEMINI_API_KEY`: Google Gemini API key
 - `REACT_APP_HUGGING_FACE_TOKEN`: Hugging Face API token
 
-## 🔧 **Tech Stack
+## 🔧 **Tech Stack#   T r i g g e r   n e w   b u i l d   a f t e r   c r e a t i n g   D o c k e r   H u b   r e p o s i t o r i e s  
+ 
