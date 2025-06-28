@@ -429,4 +429,5 @@ Production Environment
 - `REACT_APP_HUGGING_FACE_TOKEN`: Hugging Face API token
 
 ## 🔧 **Tech Stack#   T r i g g e r   n e w   b u i l d   a f t e r   c r e a t i n g   D o c k e r   H u b   r e p o s i t o r i e s  
+ #   T e s t   b u i l d   w i t h   p r o p e r   D o c k e r   H u b   w r i t e   p e r m i s s i o n s  
  
